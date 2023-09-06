@@ -1,5 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+
 const gallery = document.querySelector('.gallery');
 let instance;
 
@@ -27,7 +28,7 @@ const renderImages = arr => {
 
 const handleClick = event => {
   event.preventDefault();
-  if (event.target.nodeName !== 'IMG') {
+  if (!event.target.classList.contains('gallery__image')) {
     return;
   }
 
