@@ -33,24 +33,24 @@ const handleClick = event => {
   }
 
   const imageUrl = event.target.dataset.source;
-  instance = basicLightbox.create(
-    `<img width="1400" height="900" src='${imageUrl}'>`
-  );
-  instance.show();
 
-  // Створюємо случаха подій
-  gallery.addEventListener('keydown', handleClose);
-};
-
-const handleClose = event => {
-  if (event.key === 'Escape') {
-    instance.close();
-
-    // Видаляємо слухача подій після того,
-    // як закрили картинку
-    gallery.removeEventListener('keydown', handleClose);
+  const handleClose = (event) => {
+    if (event.key === 'Escape') {
+      instance.close();
+    }
   }
+
+  instance = basicLightbox.create(
+    `<img width="1400" height="900" src='${imageUrl}'>`,
+    {
+      onShow: () => document.addEventListener('keydown', handleClose),
+      onClose: () => document.removeEventListener('keydown', handleClose),
+    }
+  );
+
+  instance.show();
 };
+
 
 renderImages(galleryItems);
 gallery.addEventListener('click', handleClick);
